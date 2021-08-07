@@ -1,7 +1,7 @@
 {
   "name": "google-calendar-api-client",
   "description": "Google Calendar API client for JavaScript.",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "trfv",
   "keywords": [
     "google",
@@ -32,12 +32,13 @@
     "build:lib": "tsc -p tsconfig.build.json",
     "build:esm": "tsc -p tsconfig.esm.build.json"
   },
-  "devDependencies": {
+  "dependencies": {
     "@types/gapi": "^0.0.41",
     "@types/gapi.auth2": "^0.0.55",
-    "@types/gapi.calendar": "^3.0.6",
-    "@types/node": "^16.4.12",
-    "npm-run-all": "^4.1.5",
-    "typescript": "^4.3.5"
+    "@types/gapi.calendar": "^3.0.6"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.0.0",
+    "typescript": "^4.0.0"
   }
 }
