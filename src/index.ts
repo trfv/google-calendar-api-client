@@ -67,7 +67,6 @@ class CalendarApiClient {
    * Init google api client
    */
   private initClient(): void {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     this.gapi = (window as any)["gapi"];
     if (!this.gapi) {
       throw new Error("Error: this.gapi not loaded.");
@@ -101,7 +100,7 @@ class CalendarApiClient {
   /**
    * Check is signed in
    */
-  public checkIsSignedIn(): boolean {
+  public async checkIsSignedIn(): Promise<boolean> {
     if (this.gapi) {
       return this.gapi.auth2.getAuthInstance().isSignedIn.get();
     } else {
@@ -111,7 +110,7 @@ class CalendarApiClient {
   }
 
   /**
-   * List all events in the calendar queried by custom query options
+   * List calendar events
    * See all available options here https://developers.google.com/calendar/v3/reference/events/list
    */
   public listEvents(
@@ -120,7 +119,7 @@ class CalendarApiClient {
   ): HttpRequest<Events> | null {
     if (this.gapi) {
       return this.gapi.client.calendar.events.list({
-        calendarId: calendarId,
+        calendarId,
         ...queryOptions,
       });
     } else {
@@ -139,7 +138,7 @@ class CalendarApiClient {
   ): HttpRequest<Event> | null {
     if (this.gapi) {
       return this.gapi.client.calendar.events.insert({
-        calendarId: calendarId,
+        calendarId,
         ...queryOptions,
       });
     } else {
@@ -158,7 +157,7 @@ class CalendarApiClient {
   ): HttpRequest<Event> | null {
     if (this.gapi) {
       return this.gapi.client.calendar.events.update({
-        calendarId: calendarId,
+        calendarId,
         ...queryOptions,
       });
     } else {
@@ -177,7 +176,7 @@ class CalendarApiClient {
   ): HttpRequest<Event> | null {
     if (this.gapi) {
       return this.gapi.client.calendar.events.get({
-        calendarId: calendarId,
+        calendarId,
         ...queryOptions,
       });
     } else {
@@ -196,7 +195,7 @@ class CalendarApiClient {
   ): HttpRequest<Event> | null {
     if (this.gapi) {
       return this.gapi.client.calendar.events.delete({
-        calendarId: calendarId,
+        calendarId,
         ...queryOptions,
       });
     } else {

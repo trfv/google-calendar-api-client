@@ -1,11 +1,8 @@
 {
   "name": "google-calendar-api-client",
   "description": "Google Calendar API client for JavaScript.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "trfv",
-  "engines": {
-    "node": ">=v12"
-  },
   "keywords": [
     "google",
     "calendar",
