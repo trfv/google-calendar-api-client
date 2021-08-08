@@ -1,15 +1,14 @@
 type Config = Parameters<typeof gapi.client.init>[number];
 type GoogleAuth = gapi.auth2.GoogleAuth;
+type GoogleUser = gapi.auth2.GoogleUser;
+type Events = gapi.client.calendar.Events;
+type Event = gapi.client.calendar.Event;
 type EventsListParameters = gapi.client.calendar.EventsListParameters;
 type EventsInsertParameters = gapi.client.calendar.EventsInsertParameters;
 type EventsUpdateParameters = gapi.client.calendar.EventsUpdateParameters;
 type EventsGetParameters = gapi.client.calendar.EventsGetParameters;
 type EventsDeleteParameters = gapi.client.calendar.EventsDeleteParameters;
 type HttpRequest<T> = gapi.client.HttpRequest<T>;
-
-type GoogleUser = gapi.auth2.GoogleUser;
-type Events = gapi.client.calendar.Events;
-type Event = gapi.client.calendar.Event;
 
 type GAPI = {
   load(apiName: string, callback: gapi.CallbackOrConfig): void;
@@ -32,6 +31,7 @@ type GAPI = {
 
 const scriptSrc = "https://apis.google.com/js/api.js";
 const defaultCalendarId = "primary";
+const gapiIsNotLoadedError = "gapi is not loaded."
 
 class CalendarApiClient {
   private gapi: GAPI | null = null;
@@ -69,7 +69,8 @@ class CalendarApiClient {
   private initClient(): void {
     this.gapi = (window as any)["gapi"];
     if (!this.gapi) {
-      throw new Error("Error: this.gapi not loaded.");
+      console.log(gapiIsNotLoadedError);
+      return;
     }
     this.gapi.load("client:auth2", async () => await this.gapi?.client.init(this.config));
   }
@@ -81,7 +82,7 @@ class CalendarApiClient {
     if (this.gapi) {
       return this.gapi.auth2.getAuthInstance().signIn();
     } else {
-      console.log("Error: this.gapi not loaded");
+      console.log(gapiIsNotLoadedError);
       return null;
     }
   }
@@ -93,7 +94,7 @@ class CalendarApiClient {
     if (this.gapi) {
       this.gapi.auth2.getAuthInstance().signOut();
     } else {
-      console.log("Error: this.gapi not loaded");
+      console.log(gapiIsNotLoadedError);
     }
   }
 
@@ -104,7 +105,7 @@ class CalendarApiClient {
     if (this.gapi) {
       return this.gapi.auth2.getAuthInstance().isSignedIn.get();
     } else {
-      console.log("Error: this.gapi not loaded");
+      console.log(gapiIsNotLoadedError);
       return false;
     }
   }
@@ -123,7 +124,7 @@ class CalendarApiClient {
         ...queryOptions,
       });
     } else {
-      console.log("Error: this.gapi not loaded");
+      console.log(gapiIsNotLoadedError);
       return null;
     }
   }
@@ -142,7 +143,7 @@ class CalendarApiClient {
         ...queryOptions,
       });
     } else {
-      console.log("Error: this.gapi not loaded");
+      console.log(gapiIsNotLoadedError);
       return null;
     }
   }
@@ -161,7 +162,7 @@ class CalendarApiClient {
         ...queryOptions,
       });
     } else {
-      console.log("Error: gapi is not loaded");
+      console.log(gapiIsNotLoadedError);
       return null;
     }
   }
@@ -180,7 +181,7 @@ class CalendarApiClient {
         ...queryOptions,
       });
     } else {
-      console.log("Error: gapi is not loaded");
+      console.log(gapiIsNotLoadedError);
       return null;
     }
   }
@@ -199,7 +200,7 @@ class CalendarApiClient {
         ...queryOptions,
       });
     } else {
-      console.log("Error: gapi is not loaded");
+      console.log(gapiIsNotLoadedError);
       return null;
     }
   }
